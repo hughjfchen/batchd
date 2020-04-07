@@ -3,6 +3,7 @@
 *.pyc
 *.swp
 dist/
+new-dist/
 data/
 .idea/
 .directory
@@ -18,3 +19,4 @@ SourceGraph/
 .stack-work/
 Test
 credentials
+result

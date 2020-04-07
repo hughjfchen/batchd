@@ -1,0 +1,33 @@
+# docker-compose.yml
+
+version: '2'
+services:
+  batchd:
+    image: batchd:0.1.0.0
+    ports:
+      - "3000:3000"
+    links:
+      - depend_service:depend_service
+    user: batchd
+    environment:
+      PARA1: XXXXX
+      PARA2: YYYYY
+    command: static_batchd_nix_store_path/bin/batchd
+    volumes:
+      - "batchd_config_path:/var/batchd/config"
+      - "batchd_data_path:/var/batchd/data"
+    depends_on:
+      - depend_service
+    restart: unless-stopped
+  depend_service:
+    build: depend_service
+    ports:
+      - "5432:5432"
+    user: depend_service
+    environment:
+      DEPEND_SERVICE_PARA1: ZZZZ
+    command: depend_service
+    volumes:
+      - "depend_service_path:/var/lib/depend_service_path"
+      - "depend_service_data_path:/depend_service_data"
+    restart: unless-stopped
